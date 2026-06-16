@@ -1,6 +1,9 @@
 namespace SpriteKind {
     export const UI = SpriteKind.create()
     export const Item = SpriteKind.create()
+    export const heal = SpriteKind.create()
+    export const l = SpriteKind.create()
+    export const k = SpriteKind.create()
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     Render.moveWithController(5)
@@ -1190,10 +1193,25 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Render.toggleViewMode()
     }
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.heal, function (sprite, otherSprite) {
+    statusbar2.value += 20
+    sprites.destroy(bandage)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.l, function (sprite, otherSprite) {
+    statusbar2.value += 20
+    sprites.destroy(mySprite5)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.shrub, function (sprite, location) {
     scene.cameraShake(4, 500)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
     tiles.setCurrentTilemap(tilemap`level11`)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.k, function (sprite, otherSprite) {
+    statusbar2.value += 20
+    sprites.destroy(mySprite6)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.vehicle.roadHorizontal, function (sprite, location) {
+    tiles.setCurrentTilemap(tilemap`level21`)
 })
 statusbars.onZero(StatusBarKind.Health, function (status) {
     pause(200)
@@ -1204,7 +1222,29 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite, l
     HasGun = true
     start()
     tiles.setCurrentTilemap(tilemap`level15`)
-    tiles.placeOnRandomTile(mySprite, sprites.castle.tilePath8)
+    mySprite6 = sprites.create(img`
+        ....eeeeeeeeeeee....
+        ....eeeeeeeeeeee....
+        ..eeddddddddddddee..
+        ..eeddddddddddddee..
+        eedddd11111111ddddee
+        eedddd11111111ddddee
+        eedd111111111111ddee
+        eedd111111111111ddee
+        eedd111112211111ddee
+        eedd111122221111ddee
+        eedd111122221111ddee
+        eedd111112211111ddee
+        eedd111111111111ddee
+        eedd111111111111ddee
+        eedddd11111111ddddee
+        eedddd11111111ddddee
+        ..eeddddddddddddee..
+        ..eeddddddddddddee..
+        ....eeeeeeeeeeee....
+        ....eeeeeeeeeeee....
+        `, SpriteKind.k)
+    tiles.placeOnRandomTile(mySprite6, sprites.builtin.brick)
 })
 controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
     Render.toggleViewMode()
@@ -1214,8 +1254,31 @@ controller.B.onEvent(ControllerButtonEvent.Released, function () {
     statusbar.value += -5
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.doorClosedWest, function (sprite, location) {
-    scene.cameraShake(4, 500)
     tiles.setCurrentTilemap(tilemap`level0`)
+    mySprite5 = sprites.create(img`
+        ....eeeeeeeeeeee....
+        ....eeeeeeeeeeee....
+        ..eeddddddddddddee..
+        ..eeddddddddddddee..
+        eedddd11111111ddddee
+        eedddd11111111ddddee
+        eedd111111111111ddee
+        eedd111111111111ddee
+        eedd111112211111ddee
+        eedd111122221111ddee
+        eedd111122221111ddee
+        eedd111112211111ddee
+        eedd111111111111ddee
+        eedd111111111111ddee
+        eedddd11111111ddddee
+        eedddd11111111ddddee
+        ..eeddddddddddddee..
+        ..eeddddddddddddee..
+        ....eeeeeeeeeeee....
+        ....eeeeeeeeeeee....
+        `, SpriteKind.l)
+    tiles.placeOnRandomTile(mySprite5, sprites.dungeon.floorDark3)
+    scene.cameraShake(4, 500)
     tiles.placeOnTile(mySprite, tiles.getTileLocation(17, 42))
     tiles.placeOnRandomTile(myMinimap, sprites.dungeon.floorDark0)
     tiles.placeOnRandomTile(mySprite2, sprites.dungeon.floorDark0)
@@ -1903,8 +1966,31 @@ statusbars.onZero(StatusBarKind.Energy, function (status) {
     Render.moveWithController(1)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark2, function (sprite, location) {
-    scene.cameraShake(4, 500)
     tiles.setCurrentTilemap(tilemap`level4`)
+    bandage = sprites.create(img`
+        ....eeeeeeeeeeee....
+        ....eeeeeeeeeeee....
+        ..eeddddddddddddee..
+        ..eeddddddddddddee..
+        eedddd11111111ddddee
+        eedddd11111111ddddee
+        eedd111111111111ddee
+        eedd111111111111ddee
+        eedd111112211111ddee
+        eedd111122221111ddee
+        eedd111122221111ddee
+        eedd111112211111ddee
+        eedd111111111111ddee
+        eedd111111111111ddee
+        eedddd11111111ddddee
+        eedddd11111111ddddee
+        ..eeddddddddddddee..
+        ..eeddddddddddddee..
+        ....eeeeeeeeeeee....
+        ....eeeeeeeeeeee....
+        `, SpriteKind.heal)
+    tiles.placeOnRandomTile(bandage, sprites.dungeon.floorLight0)
+    scene.cameraShake(4, 500)
     tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
     mySprite2 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -2015,6 +2101,9 @@ let mySprite4: Sprite = null
 let GunHas = false
 let mySprite2: Sprite = null
 let myMinimap: Sprite = null
+let mySprite6: Sprite = null
+let mySprite5: Sprite = null
+let bandage: Sprite = null
 let projectile: Sprite = null
 let Gun1: Sprite = null
 let HasGun = false
