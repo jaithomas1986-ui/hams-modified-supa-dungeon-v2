@@ -1978,7 +1978,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.vehicle.roadIntersection2, functi
         . . f f f d 4 4 4 4 c d d c . . 
         . . . . . f f f f f c c c . . . 
         . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Player)
+        `, SpriteKind.Enemy)
     mySprite3 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . c c c c . . . . 
@@ -2158,8 +2158,6 @@ scene.setBackgroundImage(img`
     `)
 tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
 tiles.placeOnRandomTile(Gun1, sprites.dungeon.collectibleInsignia)
-Render.moveWithController(3)
-Render.setViewAngleInDegree(273)
 forever(function () {
     if (controller.B.isPressed()) {
         statusbar.value += -3
