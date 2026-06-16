@@ -1282,7 +1282,7 @@ function start () {
         .............ee444444ffffffccccccccccffffffe444eee
         .............e4444444ffffffccccccccccffffffe44ee4e
         `, SpriteKind.UI)
-    controller.moveSprite(Gun1, 0, 1)
+    controller.moveSprite(Gun1)
     Gun1.setPosition(75, 94)
     Gun1.setFlag(SpriteFlag.RelativeToCamera, true)
     characterAnimations.loopFrames(
